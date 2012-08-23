@@ -8,6 +8,9 @@ module Fog
     def self.new(attributes)
       attributes = attributes.dup # prevent delete from having side effects
       case provider = attributes.delete(:provider).to_s.downcase.to_sym
+      when :awsglacier
+        require 'fog/aws/glacier'
+        Fog::Storage::AWSGlacier.new(attributes)
       when :aws
         require 'fog/aws/storage'
         Fog::Storage::AWS.new(attributes)
